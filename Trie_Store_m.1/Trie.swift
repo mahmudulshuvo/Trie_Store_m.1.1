@@ -161,7 +161,7 @@ class Trie {
         
         while (!currentChild.isEmpty) {
             var tempCurrent : [TrieNode!] = [TrieNode!]()
-            var  check:Int = 0
+         //   var  check:Int = 0
             let existingLevel:Int = currentChild[0].level
             
             for item in currentChild {
@@ -176,15 +176,22 @@ class Trie {
                 }
             }
             currentChild = [TrieNode!]()
-            for temp in tempCurrent {
-                if (existingLevel < temp.level) {
-                    check = 1
-                    break
+            
+            if (!tempCurrent.isEmpty) {
+                if (existingLevel < tempCurrent[0].level) {
+                    currentChild = tempCurrent
                 }
             }
-            if (check == 1) {
-                currentChild = tempCurrent
-            }
+            
+//            for temp in tempCurrent {
+//                if (existingLevel < temp.level) {
+//                    check = 1
+//                    break
+//                }
+//            }
+//            if (check == 1) {
+//                currentChild = tempCurrent
+//            }
 
         }
         
