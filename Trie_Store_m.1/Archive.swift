@@ -13,9 +13,6 @@ class Archive {
     var counter:Int = 0
     var Dic: [String: AnyObject] = [String:AnyObject]()
     
-    func viewDidLoad() {
-        
-    }
     
     func archive(Dic: Dictionary<String,AnyObject>) {
         let personObj = Data(dictionary: Dic)

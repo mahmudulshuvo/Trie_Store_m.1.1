@@ -68,6 +68,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func findAction(sender: AnyObject) {
         
+
         if !(findField.text!.isEmpty) {
             if trieLoad.trieLoadFindWord(findField.text!) != nil {
                 itemArray = trieLoad.trieLoadFindWord(findField.text!)

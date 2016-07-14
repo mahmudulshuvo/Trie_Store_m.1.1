@@ -11,6 +11,7 @@ import UIKit
 class Trie {
     
     var root:TrieNode = TrieNode()
+    var words: Array<String> = Array<String>()
     
     func addWord(keyword: String)
     {
@@ -45,11 +46,14 @@ class Trie {
     }
     
     func findWord(keyword: String) -> Array<String>! {
+        
         guard keyword.length > 0 else {
             return nil
         }
+        
         var current: TrieNode = root
         var wordList: Array<String> = Array<String>()
+        
         while (keyword.length != current.level) {
             var childToUse: TrieNode!
             let searchKey: String = keyword.substringToIndex(current.level + 1)
@@ -60,13 +64,16 @@ class Trie {
                     break
                 }
             }
+            
             if childToUse == nil {
                 return nil
             }
         }
+        
         if ((current.key == keyword) && (current.isFinal)) {
             wordList.append(current.key)
         }
+    
 //        for child in current.children {
 //            
 //            if (child.isFinal == true) {
@@ -96,25 +103,94 @@ class Trie {
 //        }
         
 
-        while (!current.children.isEmpty)  {
+//        while (!current.children.isEmpty)  {
+//            
+//            var childToUse: TrieNode!
+//            var childs : [TrieNode!] =  [TrieNode!]()
+//            var  x:Int = 0
+//            
+//            for child in current.children {
+//                    childs.append(child)
+//         //       print("value \(childs[0].level)")
+//
+//            }
+//     //       x = 0
+//            
+//            for value in childs {
+//                var temp : TrieNode!
+//                temp = value
+//                
+//                if value.isFinal {
+//                    wordList.append(value.key)
+//                    print("item \(value.key) level \(value.level)")
+//                }
+//                
+//                for child in temp.children {
+//                    if (child.isFinal == true) {
+//                        wordList.append(child.key)
+//                        print("item \(child.key) level \(child.level)")
+//                    }
+//                    if !child.children.isEmpty {
+//                        for item in child.children {
+//                            if (item.isFinal) {
+//                                wordList.append(item.key)
+//                                print("item \(item.key) level \(item.level)")
+//                            }
+//                    }
+//                    childToUse = child
+//                    temp = childToUse
+//                    }
+//                }
+//                x = 1
+//                
+//            }
+//            
+//            if  x == 1 {
+//                break
+//            }
+//        }
+
+        
+        //Iterating trie
+        
+        var currentChild : [TrieNode!] =  [TrieNode!]()
+        
+        for  child in current.children {
+            currentChild.append(child)
+        }
+        
+        while (!currentChild.isEmpty) {
+            var tempCurrent : [TrieNode!] = [TrieNode!]()
+            var  check:Int = 0
+            let existingLevel:Int = currentChild[0].level
             
-            var childToUse: TrieNode!
-            for child in current.children {
-                if (child.isFinal == true) {
-                    wordList.append(child.key)
+            for item in currentChild {
+                if (item.isFinal) {
+                    wordList.append(item.key)
                 }
-                if !child.children.isEmpty {
-                    childToUse = child
-                    current = childToUse
+                if (!item.children.isEmpty) {
+                    print("1")
+                    for values in item.children {
+                        tempCurrent.append(values)
+                    }
                 }
+            }
+            currentChild = [TrieNode!]()
+            for temp in tempCurrent {
+                if (existingLevel < temp.level) {
+                    check = 1
+                    break
+                }
+            }
+            if (check == 1) {
+                currentChild = tempCurrent
             }
 
-            if childToUse == nil {
-                break
-            }
         }
+        
         return wordList
     }
+    
     
     func weightIncrease(keyword: String) {
         
