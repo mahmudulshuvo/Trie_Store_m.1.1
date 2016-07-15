@@ -32,6 +32,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         myTableView.hidden = true;
         myTableView.dataSource = self
         myTableView.delegate = self
+        findField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
         
         if launchedBefore  {
@@ -67,24 +68,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    @IBAction func findAction(sender: AnyObject) {
-        
-
+//    @IBAction func findAction(sender: AnyObject) {
+//        
+//
+//        if !(findField.text!.isEmpty) {
+//            if trieLoad.trieLoadFindWord(findField.text!) != nil {
+//              //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
+//                wordList = trieLoad.trieLoadFindWord(findField.text!)
+//                justItems(wordList)
+//                findField.text = ""
+//                updateTable()
+//                myTableView.hidden = false
+//            }
+//            else {
+//                findField.text = ""
+//                itemArray = [String]()
+//                updateTable()
+//            }
+//        }
+//    }
+    
+    
+    func textFieldDidChange(textField: UITextField) {
+        //your code
+        self.itemBtn.setTitle("Items", forState: UIControlState.Normal)
         if !(findField.text!.isEmpty) {
             if trieLoad.trieLoadFindWord(findField.text!) != nil {
-              //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
+                //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
                 wordList = trieLoad.trieLoadFindWord(findField.text!)
                 justItems(wordList)
-                findField.text = ""
+              //  findField.text = ""
                 updateTable()
                 myTableView.hidden = false
             }
             else {
-                findField.text = ""
+              //  findField.text = ""
                 itemArray = [String]()
                 updateTable()
             }
         }
+        
     }
     
     
