@@ -120,7 +120,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             for j in 0 ..< wordArray.count-1 {
                 var prev = wordArray[j].characters.split{$0 == " "}.map(String.init)
                 var next = wordArray[j+1].characters.split{$0 == " "}.map(String.init)
-                print("prev \(prev[0]) weight \(prev[1]) next \(next[0]) weight \(next[1])")
+                //print("prev \(prev[0]) weight \(prev[1]) next \(next[0]) weight \(next[1])")
                 if (Int(next[1]) > Int(prev[1])) {
                     temp = wordArray[j]
                     wordArray[j] = wordArray[j+1]
@@ -171,7 +171,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let myCell:UITableViewCell = myTableView.dequeueReusableCellWithIdentifier("prototype", forIndexPath: indexPath)
-        print(itemArray[indexPath.row])
+       // print(itemArray[indexPath.row])
         myCell.textLabel?.text = itemArray[indexPath.row];
         myCell.imageView?.image = UIImage(named: itemArray[indexPath.row]);
         

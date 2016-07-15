@@ -35,7 +35,7 @@ class Archive {
                 }
             }
             counter = 0
-            print("My Dictionary\(Dict)")
+          //  print("My Dictionary\(Dict)")
             Dic = Dict
             return Dic
         }

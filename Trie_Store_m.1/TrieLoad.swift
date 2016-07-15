@@ -19,7 +19,7 @@ class TrieLoad {
     }
     
     func loadTrie() {
-        print("Dic to load\(Dic)")
+     //   print("Dic to load\(Dic)")
         var items: [AnyObject]
         for keys in Dic.keys {
             items = Dic[keys]! as! [AnyObject]
@@ -111,7 +111,7 @@ class TrieLoad {
                         items.removeAtIndex(index)
                         items.append(newItem)
                         Dic[keys] = items
-                        print("items.......................... \(items)")
+                     //   print("items.......................... \(items)")
                         arch.archive(Dic)
                         return true
                         
