@@ -119,6 +119,11 @@
                             <constraint firstItem="Mhx-tV-tWT" firstAttribute="top" secondItem="vAe-1W-IHV" secondAttribute="bottom" constant="40" id="ppc-My-shV"/>
                             <constraint firstItem="vAe-1W-IHV" firstAttribute="top" secondItem="I9h-kt-pz7" secondAttribute="bottom" constant="40" id="qed-Dp-rRS"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7rI-aT-g3M"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
