@@ -48,7 +48,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    
     //For Button Actions
     
     @IBAction func insertAction(sender: AnyObject) {
@@ -114,11 +113,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func justItems(wordList: [String])  {
         
         itemArray = [String]()
+        var weightArray = [String]()
         for items in wordList {
             var fullWordArr = items.characters.split{$0 == " "}.map(String.init)
             itemArray.append(fullWordArr[0])
+            weightArray.append(fullWordArr[1])
         }
 
+        
+        //images.sort({ $0.fileID > $1.fileID })
         //        weight = fullWordArr[1]
     }
     
@@ -134,6 +137,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
     }
+    
+    
     
     
     
