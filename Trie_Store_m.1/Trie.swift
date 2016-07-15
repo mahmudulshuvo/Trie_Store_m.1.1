@@ -13,11 +13,18 @@ class Trie {
     var root:TrieNode = TrieNode()
     var words: Array<String> = Array<String>()
     
-    func addWord(keyword: String)
+    func addWord(item: String)
     {
-        guard keyword.length > 0 else {
+        guard item.length > 0 else {
             return
         }
+        
+        var keyword:String = ""
+        var weight:String = ""
+        
+        var fullWordArr = item.characters.split{$0 == " "}.map(String.init)
+        keyword = fullWordArr[0]
+        weight = fullWordArr[1]
         
         var current: TrieNode = root
         while (keyword.characters.count != current.level) {
@@ -40,6 +47,7 @@ class Trie {
         }
         if (keyword.characters.count == current.level) {
             current.isFinal = true
+            current.weight = Int(weight)!
             print("end of word reached!")
             return
         }
@@ -71,7 +79,7 @@ class Trie {
         }
         
         if ((current.key == keyword) && (current.isFinal)) {
-            wordList.append(current.key)
+            wordList.append(current.key+" "+String(current.weight))
         }
 
         
@@ -89,7 +97,7 @@ class Trie {
             
             for item in currentChild {
                 if (item.isFinal) {
-                    wordList.append(item.key)
+                    wordList.append(item.key+" "+String(item.weight))
                 }
                 if (!item.children.isEmpty) {
                     for values in item.children {
@@ -111,7 +119,7 @@ class Trie {
     }
     
     
-    func weightIncrease(keyword: String) {
+    func weightIncrease(keyword: String) -> Int {
         
         var current: TrieNode = root
         
@@ -126,17 +134,17 @@ class Trie {
                 }
             }
             if childToUse == nil {
-                return
+                return 0
             }
         }
         if ((current.key == keyword) && (current.isFinal)) {
             current.weight += 1
         }
-        
-        print("child \(current.key) weight \(current.weight)")
+        return current.weight
+       // print("child \(current.key) weight \(current.weight)")
     }
+    
 }
-
 
 
 

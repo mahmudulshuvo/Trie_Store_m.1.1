@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let arch:Archive = Archive()
     var itemArray = [String]()
+    var wordList = [String]()
     var Dic: [String: AnyObject] = [String:AnyObject]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
     
@@ -52,9 +53,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func insertAction(sender: AnyObject) {
         
         if !trieLoad.isExist(inputField.text!) {
-            Dic = trieLoad.updateDic(inputField.text!)
+            Dic = trieLoad.updateDic(inputField.text!+" "+"0")
             if !Dic.isEmpty {
-                trieLoad.trieLoadAddword(inputField.text!)
+                trieLoad.trieLoadAddword(inputField.text!+" "+"0")
                 inputField.text = ""
                 arch.archive(Dic)
             }
@@ -71,7 +72,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         if !(findField.text!.isEmpty) {
             if trieLoad.trieLoadFindWord(findField.text!) != nil {
-                itemArray = trieLoad.trieLoadFindWord(findField.text!)
+              //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
+                wordList = trieLoad.trieLoadFindWord(findField.text!)
+                justItems(wordList)
                 findField.text = ""
                 updateTable()
                 myTableView.hidden = false
@@ -84,6 +87,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    
+    func justItems(wordList: [String])  {
+        
+        itemArray = [String]()
+        for items in wordList {
+            var fullWordArr = items.characters.split{$0 == " "}.map(String.init)
+            itemArray.append(fullWordArr[0])
+        }
+
+        //        weight = fullWordArr[1]
+    }
     
     @IBAction func itemAction(sender: AnyObject) {
         
@@ -122,7 +136,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell:UITableViewCell = myTableView.cellForRowAtIndexPath(indexPath)!
         self.itemBtn.setTitle(cell.textLabel?.text, forState: UIControlState.Normal)
         myTableView.hidden = true
-        trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!)
+      //  trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!)
+      //  if(trieLoad.updateWeightInDic((cell.textLabel?.text)!)) {
+            countLabel.text = String(trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!))
+    //    }
+        
     }
     
     func updateTable() {
