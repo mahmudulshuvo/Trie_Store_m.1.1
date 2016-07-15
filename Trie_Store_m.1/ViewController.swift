@@ -113,11 +113,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func justItems(wordList: [String])  {
         
         itemArray = [String]()
-        var weightArray = [String]()
         for items in wordList {
             var fullWordArr = items.characters.split{$0 == " "}.map(String.init)
             itemArray.append(fullWordArr[0])
-            weightArray.append(fullWordArr[1])
         }
 
         
