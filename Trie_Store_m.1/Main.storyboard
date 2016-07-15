@@ -122,6 +122,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="7rI-aT-g3M"/>
+                                <exclude reference="jrJ-o1-izG"/>
                             </mask>
                         </variation>
                     </view>
