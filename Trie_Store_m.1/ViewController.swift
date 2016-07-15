@@ -95,6 +95,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             if trieLoad.trieLoadFindWord(findField.text!) != nil {
                 //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
                 wordList = trieLoad.trieLoadFindWord(findField.text!)
+                wordList = sortList(wordList)
+            //    print("sorted array............\(wordList)")
                 justItems(wordList)
               //  findField.text = ""
                 updateTable()
@@ -106,9 +108,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 updateTable()
             }
         }
-        
     }
     
+    
+    func sortList(wordList: [String]) -> [String] {
+        var temp:String = ""
+        var wordArray = [String]()
+        wordArray = wordList
+        
+        for _ in 0 ..< wordArray.count {
+            for j in 0 ..< wordArray.count-1 {
+                var prev = wordArray[j].characters.split{$0 == " "}.map(String.init)
+                var next = wordArray[j+1].characters.split{$0 == " "}.map(String.init)
+                print("prev \(prev[0]) weight \(prev[1]) next \(next[0]) weight \(next[1])")
+                if (Int(next[1]) > Int(prev[1])) {
+                    temp = wordArray[j]
+                    wordArray[j] = wordArray[j+1]
+                    wordArray[j+1] = temp
+                }
+            }
+        }
+        return wordArray
+    }
     
     func justItems(wordList: [String])  {
         
@@ -117,15 +138,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             var fullWordArr = items.characters.split{$0 == " "}.map(String.init)
             itemArray.append(fullWordArr[0])
         }
-
-        
-        //images.sort({ $0.fileID > $1.fileID })
-        //        weight = fullWordArr[1]
     }
     
     @IBAction func itemAction(sender: AnyObject) {
         
         if itemArray.count > 0 {
+            wordList = trieLoad.trieLoadFindWord(findField.text!)
+            wordList = sortList(wordList)
+            justItems(wordList)
+            updateTable()
             if myTableView.hidden == true {
                 myTableView.hidden = false
             }
