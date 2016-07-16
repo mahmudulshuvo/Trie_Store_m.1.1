@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var wordList = [String]()
     var Dic: [String: AnyObject] = [String:AnyObject]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
+    var highestWeight:Int = 0
     
     
     let launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
@@ -128,6 +129,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
         }
+        var takeWeight = wordArray[0].characters.split{$0 == " "}.map(String.init)
+        self.highestWeight = Int(takeWeight[1])!
         return wordArray
     }
     
@@ -143,10 +146,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func itemAction(sender: AnyObject) {
         
         if itemArray.count > 0 {
-            wordList = trieLoad.trieLoadFindWord(findField.text!)
-            wordList = sortList(wordList)
-            justItems(wordList)
-            updateTable()
+            
+            if (self.highestWeight < Int(countLabel.text!)) {
+                wordList = trieLoad.trieLoadFindWord(findField.text!)
+                wordList = sortList(wordList)
+                justItems(wordList)
+                updateTable()
+                self.highestWeight = Int(countLabel.text!)!
+            }
+
             if myTableView.hidden == true {
                 myTableView.hidden = false
             }
