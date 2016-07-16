@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var inputField: UITextField!
@@ -19,9 +20,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let arch:Archive = Archive()
     var itemArray = [String]()
     var wordList = [String]()
-    var Dic: [String: AnyObject] = [String:AnyObject]()
+ //   var Dic: [String: AnyObject] = [String:AnyObject]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
     var highestWeight:Int = 0
+
+    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
     let launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
@@ -34,12 +37,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         myTableView.dataSource = self
         myTableView.delegate = self
         findField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(saveData), name: UIApplicationWillTerminateNotification, object: nil)
         
         if launchedBefore  {
             print("Not first launch.")
-            Dic = arch.unarchive()
-            trieLoad = TrieLoad(dic: Dic)
+            appDelegate.Dic = arch.unarchive()
+            trieLoad = TrieLoad(dic: appDelegate.Dic)
             trieLoad.loadTrie()
         }
         else {
@@ -49,16 +52,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
+
+    
     //For Button Actions
     
     @IBAction func insertAction(sender: AnyObject) {
         
         if !trieLoad.isExist(inputField.text!) {
-            Dic = trieLoad.updateDic(inputField.text!+" "+"0")
-            if !Dic.isEmpty {
+            appDelegate.Dic = trieLoad.updateDic(inputField.text!+" "+"0")
+            if !appDelegate.Dic.isEmpty {
                 trieLoad.trieLoadAddword(inputField.text!+" "+"0")
                 inputField.text = ""
-                arch.archive(Dic)
+               // arch.archive(appDelegate.Dic)
             }
         }
         else{
@@ -115,6 +120,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return wordArray
     }
     
+    
     func justItems(wordList: [String])  {
         
         itemArray = [String]()
@@ -123,6 +129,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             itemArray.append(fullWordArr[0])
         }
     }
+    
     
     @IBAction func itemAction(sender: AnyObject) {
         
@@ -182,6 +189,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.myTableView.hidden = true
             }
         })
+    }
+    
+    
+    
+    
+    func saveData(notification:NSNotification) {
+        // Save your data here
+        print("Saving data...")
+    }
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter .defaultCenter() .removeObserver(self)
     }
     
     override func didReceiveMemoryWarning() {

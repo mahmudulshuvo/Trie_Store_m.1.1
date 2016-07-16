@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 class TrieLoad {
     
     var Dic: [String: AnyObject] = [String:AnyObject]()
     var trie:Trie = Trie()
     let arch:Archive = Archive()
+    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     init(dic : Dictionary<String,AnyObject>) {
         Dic = dic
@@ -112,7 +114,8 @@ class TrieLoad {
                         items.append(newItem)
                         Dic[keys] = items
                      //   print("items.......................... \(items)")
-                        arch.archive(Dic)
+                     //   arch.archive(Dic)
+                        appDelegate.Dic = Dic
                         return true
                         
                     }
