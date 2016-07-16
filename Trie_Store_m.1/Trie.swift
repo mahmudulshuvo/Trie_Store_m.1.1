@@ -11,7 +11,6 @@ import UIKit
 class Trie {
     
     var root:TrieNode = TrieNode()
-    var words: Array<String> = Array<String>()
     
     func addWord(item: String)
     {
@@ -53,14 +52,14 @@ class Trie {
         }
     }
     
-    func findWord(keyword: String) -> Array<String>! {
+    func findWord(keyword: String) -> [String] {
         
         guard keyword.length > 0 else {
-            return nil
+            return []
         }
         
         var current: TrieNode = root
-        var wordList: Array<String> = Array<String>()
+        var wordList: [String] = [String]()
         
         while (keyword.length != current.level) {
             var childToUse: TrieNode!
@@ -74,7 +73,7 @@ class Trie {
             }
             
             if childToUse == nil {
-                return nil
+                return []
             }
         }
         
@@ -93,7 +92,6 @@ class Trie {
         
         while (!currentChild.isEmpty) {
             var tempCurrent : [TrieNode!] = [TrieNode!]()
-         //   let existingLevel:Int = currentChild[0].level
             
             for item in currentChild {
                 if (item.isFinal) {
@@ -107,12 +105,6 @@ class Trie {
             }
             currentChild = [TrieNode!]()
             currentChild = tempCurrent
-            
-//            if (!tempCurrent.isEmpty) {
-//                if (existingLevel < tempCurrent[0].level) {
-//                    currentChild = tempCurrent
-//                }
-//            }
         }
         
         return wordList

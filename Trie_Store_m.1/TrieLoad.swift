@@ -33,20 +33,20 @@ class TrieLoad {
     func isExist(value: String) -> Bool {
         var items: [AnyObject]
         var justWord:String = ""
-       // var weight:String = ""
         var fullWord:String = ""
         
         for keys in Dic.keys {
-            items = Dic[keys]! as! [AnyObject]
-            for item in items
-            {
-                fullWord = (item as? String)!
-                var fullWordArr = fullWord.characters.split{$0 == " "}.map(String.init)
-                justWord = fullWordArr[0]
-        //        weight = fullWordArr[1]
-                
-                if(justWord == value)  {
-                    return true
+            if (keys == String(value[value.startIndex.advancedBy(0)])) {
+                items = Dic[keys]! as! [AnyObject]
+                for item in items
+                {
+                    fullWord = (item as? String)!
+                    var fullWordArr = fullWord.characters.split{$0 == " "}.map(String.init)
+                    justWord = fullWordArr[0]
+                    
+                    if(justWord == value)  {
+                        return true
+                    }
                 }
             }
         }
@@ -128,10 +128,11 @@ class TrieLoad {
         trie.addWord(item)
     }
     
-    func trieLoadFindWord(key : String) -> Array<String>!{
-        var list: Array<String> = Array<String>()
-        if trie.findWord(key) != nil {
-            list = trie.findWord(key)
+    func trieLoadFindWord(key : String) -> [String]{
+        var list: [String] = [String]()
+        list = trie.findWord(key)
+        
+        if (!list.isEmpty) {
             return list
         }
         return []

@@ -68,46 +68,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-//    @IBAction func findAction(sender: AnyObject) {
-//        
-//
-//        if !(findField.text!.isEmpty) {
-//            if trieLoad.trieLoadFindWord(findField.text!) != nil {
-//              //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
-//                wordList = trieLoad.trieLoadFindWord(findField.text!)
-//                justItems(wordList)
-//                findField.text = ""
-//                updateTable()
-//                myTableView.hidden = false
-//            }
-//            else {
-//                findField.text = ""
-//                itemArray = [String]()
-//                updateTable()
-//            }
-//        }
-//    }
-    
-    
+
     func textFieldDidChange(textField: UITextField) {
-        //your code
+
         self.itemBtn.setTitle("Items", forState: UIControlState.Normal)
+        
         if !(findField.text!.isEmpty) {
-            if trieLoad.trieLoadFindWord(findField.text!) != nil {
-                //  itemArray = trieLoad.trieLoadFindWord(findField.text!)
-                wordList = trieLoad.trieLoadFindWord(findField.text!)
+            wordList = trieLoad.trieLoadFindWord(findField.text!)
+            if  (!wordList.isEmpty) {
                 wordList = sortList(wordList)
-            //    print("sorted array............\(wordList)")
                 justItems(wordList)
-              //  findField.text = ""
                 updateTable()
                 myTableView.hidden = false
             }
+                
             else {
-              //  findField.text = ""
                 itemArray = [String]()
                 updateTable()
             }
+        }
+        else {
+            itemArray = [String]()
+            updateTable()
         }
     }
     
@@ -121,7 +103,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             for j in 0 ..< wordArray.count-1 {
                 var prev = wordArray[j].characters.split{$0 == " "}.map(String.init)
                 var next = wordArray[j+1].characters.split{$0 == " "}.map(String.init)
-                //print("prev \(prev[0]) weight \(prev[1]) next \(next[0]) weight \(next[1])")
                 if (Int(next[1]) > Int(prev[1])) {
                     temp = wordArray[j]
                     wordArray[j] = wordArray[j+1]
@@ -166,9 +147,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    
-    
-    
     //For table view
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -191,10 +169,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell:UITableViewCell = myTableView.cellForRowAtIndexPath(indexPath)!
         self.itemBtn.setTitle(cell.textLabel?.text, forState: UIControlState.Normal)
         myTableView.hidden = true
-      //  trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!)
-      //  if(trieLoad.updateWeightInDic((cell.textLabel?.text)!)) {
-            countLabel.text = String(trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!))
-    //    }
+        countLabel.text = String(trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!))
+
         
     }
     
@@ -202,6 +178,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.myTableView.reloadData()
+            if (self.itemArray.isEmpty) {
+                self.myTableView.hidden = true
+            }
         })
     }
     
