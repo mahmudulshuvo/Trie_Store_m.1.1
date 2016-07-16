@@ -23,10 +23,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
  //   var Dic: [String: AnyObject] = [String:AnyObject]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
     var highestWeight:Int = 0
-
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    
     let launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
     
     override func viewDidLoad() {
@@ -37,7 +34,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         myTableView.dataSource = self
         myTableView.delegate = self
         findField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(saveData), name: UIApplicationWillTerminateNotification, object: nil)
         
         if launchedBefore  {
             print("Not first launch.")
@@ -191,19 +187,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         })
     }
     
-    
-    
-    
-    func saveData(notification:NSNotification) {
-        // Save your data here
-        print("Saving data...")
-    }
-    
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        NSNotificationCenter .defaultCenter() .removeObserver(self)
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
