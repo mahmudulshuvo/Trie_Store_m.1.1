@@ -209,15 +209,18 @@
 					C8A3416C1D364A07001405D8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = LBS8CGX65G;
+						LastSwiftMigration = 0800;
 					};
 					C8A341801D364A07001405D8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = LBS8CGX65G;
+						LastSwiftMigration = 0800;
 						TestTargetID = C8A3416C1D364A07001405D8;
 					};
 					C8A3418B1D364A07001405D8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = LBS8CGX65G;
+						LastSwiftMigration = 0800;
 						TestTargetID = C8A3416C1D364A07001405D8;
 					};
 				};
@@ -420,6 +423,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -431,6 +435,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -442,6 +447,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trie_Store_m.1.app/Trie_Store_m.1";
 			};
 			name = Debug;
@@ -454,6 +460,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trie_Store_m.1.app/Trie_Store_m.1";
 			};
 			name = Release;
@@ -465,6 +472,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Trie_Store_m.1;
 			};
 			name = Debug;
@@ -476,6 +484,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Trie_Store_m.1;
 			};
 			name = Release;
@@ -499,6 +508,7 @@
 				C8A341971D364A07001405D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C8A341981D364A07001405D8 /* Build configuration list for PBXNativeTarget "Trie_Store_m.1Tests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +517,7 @@
 				C8A3419A1D364A07001405D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C8A3419B1D364A07001405D8 /* Build configuration list for PBXNativeTarget "Trie_Store_m.1UITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +526,7 @@
 				C8A3419D1D364A07001405D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
