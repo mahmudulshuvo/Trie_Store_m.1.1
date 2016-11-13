@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -47,7 +48,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var wordList = [String]()
  //   var Dic: [String: Any] = [String:Any]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
-    var highestWeight:Int = 0
+    var highestWeight:Int? = 0
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     
@@ -62,12 +63,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
         
         if launchedBefore  {
             print("Not first launch.")
             appDelegate.Dic = arch.unarchive()
+            print("The main dic : \(appDelegate.Dic)")
             trieLoad = TrieLoad(dic: appDelegate.Dic)
             trieLoad.loadTrie()
         }
@@ -174,8 +177,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
         }
-//        var takeWeight = wordArray[0].characters.split{$0 == " "}.map(String.init)
-//        self.highestWeight = Int(takeWeight[1])!
+        var takeWeight = wordArray[0].characters.split{$0 == " "}.map(String.init)
+        self.highestWeight = Int(takeWeight[1])
+     //   print("highest weight :\(Int(takeWeight[1])!)")
         return wordArray
     }
     
