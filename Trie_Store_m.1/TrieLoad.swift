@@ -11,20 +11,20 @@ import UIKit
 
 class TrieLoad {
     
-    var Dic: [String: AnyObject] = [String:AnyObject]()
+    var Dic: [String: Any] = [String:Any]()
     var trie:Trie = Trie()
     let arch:Archive = Archive()
-    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    init(dic : Dictionary<String,AnyObject>) {
+    init(dic : Dictionary<String,Any>) {
         Dic = dic
     }
     
     func loadTrie() {
      //   print("Dic to load\(Dic)")
-        var items: [AnyObject]
+        var items: [Any]
         for keys in Dic.keys {
-            items = Dic[keys]! as! [AnyObject]
+            items = Dic[keys]! as! [Any]
             for item in items
             {
                 trie.addWord((item as? String)!)
@@ -32,14 +32,14 @@ class TrieLoad {
         }
     }
     
-    func isExist(value: String) -> Bool {
-        var items: [AnyObject]
+    func isExist(_ value: String) -> Bool {
+        var items: [Any]
         var justWord:String = ""
         var fullWord:String = ""
         
         for keys in Dic.keys {
-            if (keys == String(value[value.startIndex.advancedBy(0)])) {
-                items = Dic[keys]! as! [AnyObject]
+            if (keys == String(value[value.characters.index(value.startIndex, offsetBy: 0)])) {
+                items = Dic[keys]! as! [Any]
                 for item in items
                 {
                     fullWord = (item as? String)!
@@ -55,20 +55,20 @@ class TrieLoad {
         return false
     }
     
-    func updateDic(value : String) -> Dictionary<String,AnyObject> {
+    func updateDic(_ value : String) -> Dictionary<String,Any> {
         if Dic.isEmpty {
-            Dic = [String(value[value.startIndex.advancedBy(0)]) :[value]]
+            Dic = [String(value[value.characters.index(value.startIndex, offsetBy: 0)]) :[value]]
             return Dic
         }
             
         else {
             var exist:Bool = true
-            var items: [AnyObject]
+            var items: [Any]
             for keys in Dic.keys {
-                if keys == String(value[value.startIndex.advancedBy(0)]) {
-                    items = Dic[keys]! as! [AnyObject]
-                    items.append(value)
-                    Dic[keys] = items
+                if keys == String(value[value.characters.index(value.startIndex, offsetBy: 0)]) {
+                    items = Dic[keys]! as! [Any]
+                    items.append(value as Any)
+                    Dic[keys] = items as Any?
                     return Dic
                 }
                 else {
@@ -77,7 +77,7 @@ class TrieLoad {
             }
             
             if !exist {
-                Dic[String(value[value.startIndex.advancedBy(0)])] = [value]
+                Dic[String(value[value.characters.index(value.startIndex, offsetBy: 0)])] = [value]
                 return Dic
             }
             return [:]
@@ -85,8 +85,8 @@ class TrieLoad {
         }
     }
     
-    func updateWeightInDic(key : String) -> Bool {
-        var items: [AnyObject]
+    func updateWeightInDic(_ key : String) -> Bool {
+        var items: [Any]
         var justWord:String = ""
         var weight:String = ""
         var fullWord:String = ""
@@ -94,8 +94,8 @@ class TrieLoad {
         
         for keys in Dic.keys {
             
-            if keys == String(key[key.startIndex.advancedBy(0)]) {
-                items = Dic[keys]! as! [AnyObject]
+            if keys == String(key[key.characters.index(key.startIndex, offsetBy: 0)]) {
+                items = Dic[keys]! as! [Any]
                 var index:Int = 0
                 
                 
@@ -109,10 +109,10 @@ class TrieLoad {
                         var mass:Int = Int(weight)!
                         mass += 1
                         weight = String(mass)
-                        let newItem:AnyObject = justWord+" "+weight
-                        items.removeAtIndex(index)
+                        let newItem:Any = justWord+" "+weight
+                        items.remove(at: index)
                         items.append(newItem)
-                        Dic[keys] = items
+                        Dic[keys] = items as Any?
                      //   print("items.......................... \(items)")
                      //   arch.archive(Dic)
                         appDelegate.Dic = Dic
@@ -127,11 +127,11 @@ class TrieLoad {
         return false
     }
     
-    func trieLoadAddword(item : String){
+    func trieLoadAddword(_ item : String){
         trie.addWord(item)
     }
     
-    func trieLoadFindWord(key : String) -> [String]{
+    func trieLoadFindWord(_ key : String) -> [String]{
         var list: [String] = [String]()
         list = trie.findWord(key)
         
@@ -141,7 +141,7 @@ class TrieLoad {
         return []
     }
     
-    func trieLoadWeighIncrease(key : String) -> Int {
+    func trieLoadWeighIncrease(_ key : String) -> Int {
         var  weight:Int = 0
         
         let check: Bool = updateWeightInDic(key)

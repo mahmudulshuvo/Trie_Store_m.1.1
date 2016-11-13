@@ -7,6 +7,31 @@
 //
 
 import UIKit
+import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -20,20 +45,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let arch:Archive = Archive()
     var itemArray = [String]()
     var wordList = [String]()
- //   var Dic: [String: AnyObject] = [String:AnyObject]()
+ //   var Dic: [String: Any] = [String:Any]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
     var highestWeight:Int = 0
-    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        myTableView.hidden = true;
+        myTableView.isHidden = true;
         myTableView.dataSource = self
         myTableView.delegate = self
-        findField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        findField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
         
         if launchedBefore  {
             print("Not first launch.")
@@ -43,16 +73,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         else {
             print("First launch, setting NSUserDefault.")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "launchedBefore")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            let words = readFile()
+            print("Read \(words.count) words from file: \(words)")
+            
+            let captureStart = (Date().timeIntervalSince1970) * 1000
+            // do something
+            for word in words {
+                trieLoad.trieLoadAddword(word+" "+"0")
+            }
+            //
+            let captureEnd = (Date().timeIntervalSince1970) * 1000
+            let executionTime = captureEnd - captureStart
+            print("execution time :\(executionTime)")
+            updateMainDic(wordArray: words)
+        }
+    }
+
+    
+    //For Performance Check
+    func readFile() -> Array<String> {
+        
+        do {
+            let pathNew = Bundle.main.path(forResource: "Paragraph", ofType: "txt")
+            let contests:NSString = try NSString(contentsOfFile: pathNew!, encoding: String.Encoding.ascii.rawValue)
+            let trimmed:String = contests.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+            let words:Array<String> =  NSString(string: trimmed).components(separatedBy: .whitespacesAndNewlines)
+            return words
+        } catch {
+            print("Unable to read file");
+            return [String]()
         }
     }
     
     
-
+    //Update Dictionary 
+    func updateMainDic(wordArray : Array<String> ) {
+        for words in wordArray {
+            appDelegate.Dic = trieLoad.updateDic(words+" "+"0")
+        }
+    }
     
     //For Button Actions
-    
-    @IBAction func insertAction(sender: AnyObject) {
+    @IBAction func insertAction(_ sender: Any) {
         
         if !trieLoad.isExist(inputField.text!) {
             appDelegate.Dic = trieLoad.updateDic(inputField.text!+" "+"0")
@@ -70,9 +133,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
 
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
 
-        self.itemBtn.setTitle("Items", forState: UIControlState.Normal)
+        self.itemBtn.setTitle("Items", for: UIControlState())
         
         if !(findField.text!.isEmpty) {
             wordList = trieLoad.trieLoadFindWord(findField.text!)
@@ -80,7 +143,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 wordList = sortList(wordList)
                 justItems(wordList)
                 updateTable()
-                myTableView.hidden = false
+                myTableView.isHidden = false
             }
                 
             else {
@@ -95,7 +158,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    func sortList(wordList: [String]) -> [String] {
+    func sortList(_ wordList: [String]) -> [String] {
         var temp:String = ""
         var wordArray = [String]()
         wordArray = wordList
@@ -111,13 +174,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
         }
-        var takeWeight = wordArray[0].characters.split{$0 == " "}.map(String.init)
-        self.highestWeight = Int(takeWeight[1])!
+//        var takeWeight = wordArray[0].characters.split{$0 == " "}.map(String.init)
+//        self.highestWeight = Int(takeWeight[1])!
         return wordArray
     }
     
     
-    func justItems(wordList: [String])  {
+    func justItems(_ wordList: [String])  {
         
         itemArray = [String]()
         for items in wordList {
@@ -127,7 +190,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    @IBAction func itemAction(sender: AnyObject) {
+    @IBAction func itemAction(_ sender: Any) {
         
         if itemArray.count > 0 {
             
@@ -139,12 +202,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.highestWeight = Int(countLabel.text!)!
             }
 
-            if myTableView.hidden == true {
-                myTableView.hidden = false
+            if myTableView.isHidden == true {
+                myTableView.isHidden = false
             }
             else
             {
-                myTableView.hidden = true
+                myTableView.isHidden = true
             }
         }
     }
@@ -152,14 +215,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //For table view
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return itemArray.count;
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let myCell:UITableViewCell = myTableView.dequeueReusableCellWithIdentifier("prototype", forIndexPath: indexPath)
+        let myCell:UITableViewCell = myTableView.dequeueReusableCell(withIdentifier: "prototype", for: indexPath)
        // print(itemArray[indexPath.row])
         myCell.textLabel?.text = itemArray[indexPath.row];
         myCell.imageView?.image = UIImage(named: itemArray[indexPath.row]);
@@ -167,11 +230,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return myCell;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let cell:UITableViewCell = myTableView.cellForRowAtIndexPath(indexPath)!
-        self.itemBtn.setTitle(cell.textLabel?.text, forState: UIControlState.Normal)
-        myTableView.hidden = true
+        let cell:UITableViewCell = myTableView.cellForRow(at: indexPath)!
+        self.itemBtn.setTitle(cell.textLabel?.text, for: UIControlState())
+        myTableView.isHidden = true
         countLabel.text = String(trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!))
 
         
@@ -179,12 +242,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func updateTable() {
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             self.myTableView.reloadData()
             if (self.itemArray.isEmpty) {
-                self.myTableView.hidden = true
+                self.myTableView.isHidden = true
             }
         })
+    }
+    
+    
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     

@@ -16,26 +16,26 @@ class Data : NSObject, NSCoding {
     }
     
     var key: [String] = []
-    var value: AnyObject = []
+    var value: Any = []
     
-    init(dictionary: [String : AnyObject]) {
+    init(dictionary: [String : Any]) {
         
         key = Array(dictionary.keys)
-        value = Array(dictionary.values)
+        value = Array(dictionary.values) as Any
     }
     
-    func encodeWithCoder(archiver: NSCoder) {
-        archiver.encodeObject(key, forKey: Keys.Key)
-        archiver.encodeObject(value, forKey: Keys.Value)
+    func encode(with archiver: NSCoder) {
+        archiver.encode(key, forKey: Keys.Key)
+        archiver.encode(value, forKey: Keys.Value)
     }
     
     required init(coder unarchiver: NSCoder) {
         
-        if let keyList = unarchiver.decodeObjectForKey(Keys.Key) as? [String] {
+        if let keyList = unarchiver.decodeObject(forKey: Keys.Key) as? [String] {
             key = keyList
         }
-        if let wordList = unarchiver.decodeObjectForKey(Keys.Value) as? [AnyObject] {
-            value = wordList
+        if let wordList = unarchiver.decodeObject(forKey: Keys.Value) as? [Any] {
+            value = wordList as Any
         }
         super.init()
     }

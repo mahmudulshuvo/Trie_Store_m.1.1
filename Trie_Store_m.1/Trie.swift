@@ -12,7 +12,7 @@ class Trie {
     
     var root:TrieNode = TrieNode()
     
-    func addWord(item: String)
+    func addWord(_ item: String)
     {
         guard item.length > 0 else {
             return
@@ -52,7 +52,7 @@ class Trie {
         }
     }
     
-    func findWord(keyword: String) -> [String] {
+    func findWord(_ keyword: String) -> [String] {
         
         guard keyword.length > 0 else {
             return []
@@ -84,21 +84,21 @@ class Trie {
         
         //Iterating trie
         
-        var currentChild : [TrieNode!] =  [TrieNode!]()
+        var currentChild : [TrieNode?] =  [TrieNode!]()
         
         for  child in current.children {
             currentChild.append(child)
         }
         
         while (!currentChild.isEmpty) {
-            var tempCurrent : [TrieNode!] = [TrieNode!]()
+            var tempCurrent : [TrieNode?] = [TrieNode!]()
             
             for item in currentChild {
-                if (item.isFinal) {
-                    wordList.append(item.key+" "+String(item.weight))
+                if (item?.isFinal)! {
+                    wordList.append((item?.key)!+" "+String(describing: item?.weight))
                 }
-                if (!item.children.isEmpty) {
-                    for values in item.children {
+                if (!(item?.children.isEmpty)!) {
+                    for values in (item?.children)! {
                         tempCurrent.append(values)
                     }
                 }
@@ -111,7 +111,7 @@ class Trie {
     }
     
     
-    func weightIncrease(keyword: String) -> Int {
+    func weightIncrease(_ keyword: String) -> Int {
         
         var current: TrieNode = root
         
@@ -145,7 +145,7 @@ extension String {
     //compute the length
     var length: Int { return self.characters.count }
     //returns characters up to a specified index
-    func substringToIndex(to: Int) -> String {
-        return self.substringToIndex(self.startIndex.advancedBy(to))
+    func substringToIndex(_ to: Int) -> String {
+        return self.substring(to: self.characters.index(self.startIndex, offsetBy: to))
     }
 }

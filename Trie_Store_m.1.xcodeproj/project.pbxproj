@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C82F74151DD84DB900E12F34 /* Paragraph.txt in Resources */ = {isa = PBXBuildFile; fileRef = C82F74141DD84DB900E12F34 /* Paragraph.txt */; };
 		C8A341711D364A07001405D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A341701D364A07001405D8 /* AppDelegate.swift */; };
 		C8A341731D364A07001405D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A341721D364A07001405D8 /* ViewController.swift */; };
 		C8A341781D364A07001405D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8A341771D364A07001405D8 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C82F74141DD84DB900E12F34 /* Paragraph.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Paragraph.txt; sourceTree = "<group>"; };
 		C8A3416D1D364A07001405D8 /* Trie_Store_m.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trie_Store_m.1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A341701D364A07001405D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8A341721D364A07001405D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				C8A341771D364A07001405D8 /* Assets.xcassets */,
 				C8A341791D364A07001405D8 /* LaunchScreen.storyboard */,
 				C8A3417C1D364A07001405D8 /* Info.plist */,
+				C82F74141DD84DB900E12F34 /* Paragraph.txt */,
 			);
 			path = Trie_Store_m.1;
 			sourceTree = "<group>";
@@ -203,24 +206,24 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = SHUVO;
 				TargetAttributes = {
 					C8A3416C1D364A07001405D8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = LBS8CGX65G;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					C8A341801D364A07001405D8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = LBS8CGX65G;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 						TestTargetID = C8A3416C1D364A07001405D8;
 					};
 					C8A3418B1D364A07001405D8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = LBS8CGX65G;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 						TestTargetID = C8A3416C1D364A07001405D8;
 					};
 				};
@@ -251,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8A3417B1D364A07001405D8 /* LaunchScreen.storyboard in Resources */,
+				C82F74151DD84DB900E12F34 /* Paragraph.txt in Resources */,
 				C8A341781D364A07001405D8 /* Assets.xcassets in Resources */,
 				C8A341A91D364A8C001405D8 /* Main.storyboard in Resources */,
 			);
@@ -344,8 +348,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -390,8 +396,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -410,6 +418,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -423,7 +432,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -435,7 +444,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -447,7 +456,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trie_Store_m.1.app/Trie_Store_m.1";
 			};
 			name = Debug;
@@ -460,7 +469,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trie_Store_m.1.app/Trie_Store_m.1";
 			};
 			name = Release;
@@ -472,7 +481,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Trie_Store_m.1;
 			};
 			name = Debug;
@@ -484,7 +493,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shuvo.Trie-Store-m-1UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Trie_Store_m.1;
 			};
 			name = Release;
