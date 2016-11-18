@@ -56,6 +56,7 @@ class TrieLoad {
     }
     
     func updateDic(_ value : String) -> Dictionary<String,Any> {
+        
         if Dic.isEmpty {
             Dic = [String(value[value.characters.index(value.startIndex, offsetBy: 0)]) :[value]]
             return Dic
@@ -131,12 +132,14 @@ class TrieLoad {
         trie.addWord(item)
     }
     
-    func trieLoadFindWord(_ key : String) -> [String]{
-        var list: [String] = [String]()
-        list = trie.findWord(key)
+    func trieLoadFindWord(_ key : String) -> [Item]{
+        //var list: [String] = [String]()
+        var newList = [Item]()
+       // list = trie.findWord(key)
+        newList = trie.findWord(key)
         
-        if (!list.isEmpty) {
-            return list
+        if (!newList.isEmpty) {
+            return newList
         }
         return []
     }

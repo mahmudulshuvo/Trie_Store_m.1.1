@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C82F74151DD84DB900E12F34 /* Paragraph.txt in Resources */ = {isa = PBXBuildFile; fileRef = C82F74141DD84DB900E12F34 /* Paragraph.txt */; };
+		C88719CA1DDDEF96006E0649 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88719C91DDDEF96006E0649 /* Item.swift */; };
+		C88F12AF1DDCFB6000EB6478 /* WordFile.txt in Resources */ = {isa = PBXBuildFile; fileRef = C88F12AE1DDCFB6000EB6478 /* WordFile.txt */; };
 		C8A341711D364A07001405D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A341701D364A07001405D8 /* AppDelegate.swift */; };
 		C8A341731D364A07001405D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A341721D364A07001405D8 /* ViewController.swift */; };
 		C8A341781D364A07001405D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8A341771D364A07001405D8 /* Assets.xcassets */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		C82F74141DD84DB900E12F34 /* Paragraph.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Paragraph.txt; sourceTree = "<group>"; };
+		C88719C91DDDEF96006E0649 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		C88F12AE1DDCFB6000EB6478 /* WordFile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WordFile.txt; sourceTree = "<group>"; };
 		C8A3416D1D364A07001405D8 /* Trie_Store_m.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trie_Store_m.1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A341701D364A07001405D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8A341721D364A07001405D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,10 +120,12 @@
 				C8A341A01D364A1C001405D8 /* TrieLoad.swift */,
 				C8A341A11D364A1C001405D8 /* Archive.swift */,
 				C8A341A21D364A1C001405D8 /* Data.swift */,
+				C88719C91DDDEF96006E0649 /* Item.swift */,
 				C8A341A81D364A8C001405D8 /* Main.storyboard */,
 				C8A341771D364A07001405D8 /* Assets.xcassets */,
 				C8A341791D364A07001405D8 /* LaunchScreen.storyboard */,
 				C8A3417C1D364A07001405D8 /* Info.plist */,
+				C88F12AE1DDCFB6000EB6478 /* WordFile.txt */,
 				C82F74141DD84DB900E12F34 /* Paragraph.txt */,
 			);
 			path = Trie_Store_m.1;
@@ -255,6 +261,7 @@
 			files = (
 				C8A3417B1D364A07001405D8 /* LaunchScreen.storyboard in Resources */,
 				C82F74151DD84DB900E12F34 /* Paragraph.txt in Resources */,
+				C88F12AF1DDCFB6000EB6478 /* WordFile.txt in Resources */,
 				C8A341781D364A07001405D8 /* Assets.xcassets in Resources */,
 				C8A341A91D364A8C001405D8 /* Main.storyboard in Resources */,
 			);
@@ -287,6 +294,7 @@
 				C8A341A41D364A1C001405D8 /* Trie.swift in Sources */,
 				C8A341A31D364A1C001405D8 /* TrieNode.swift in Sources */,
 				C8A341A61D364A1C001405D8 /* Archive.swift in Sources */,
+				C88719CA1DDDEF96006E0649 /* Item.swift in Sources */,
 				C8A341711D364A07001405D8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,7 +370,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",

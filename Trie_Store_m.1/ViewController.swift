@@ -40,13 +40,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var inputField: UITextField!
     @IBOutlet weak var findField: UITextField!
     @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var itemBtn: UIButton!
+    @IBOutlet weak var itemBtn: UIButton! 
     @IBOutlet weak var countLabel: UILabel!
     
     let arch:Archive = Archive()
-    var itemArray = [String]()
-    var wordList = [String]()
- //   var Dic: [String: Any] = [String:Any]()
+    var wordList = [Item]()
+    var itemArr = [Item]()
     var trieLoad:TrieLoad = TrieLoad(dic: [:])
     var highestWeight:Int? = 0
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -69,47 +68,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if launchedBefore  {
             print("Not first launch.")
+            let captureStart = (Date().timeIntervalSince1970) * 1000
             appDelegate.Dic = arch.unarchive()
-            print("The main dic : \(appDelegate.Dic)")
             trieLoad = TrieLoad(dic: appDelegate.Dic)
             trieLoad.loadTrie()
+            let captureEnd = (Date().timeIntervalSince1970) * 1000
+            let executionTime = captureEnd - captureStart
+            print("execution time for not first launch :\(executionTime)")
         }
+            
         else {
             print("First launch, setting NSUserDefault.")
             UserDefaults.standard.set(true, forKey: "launchedBefore")
-            let words = readFile()
-            print("Read \(words.count) words from file: \(words)")
-            
             let captureStart = (Date().timeIntervalSince1970) * 1000
-            // do something
+            let words = readFile()
             for word in words {
                 trieLoad.trieLoadAddword(word+" "+"0")
             }
-            //
             let captureEnd = (Date().timeIntervalSince1970) * 1000
             let executionTime = captureEnd - captureStart
-            print("execution time :\(executionTime)")
+            print("execution time for the first launch :\(executionTime)")
             updateMainDic(wordArray: words)
+            totalWords()
         }
+        
     }
 
-    
-    //For Performance Check
-    func readFile() -> Array<String> {
-        
-        do {
-            let pathNew = Bundle.main.path(forResource: "Paragraph", ofType: "txt")
-            let contests:NSString = try NSString(contentsOfFile: pathNew!, encoding: String.Encoding.ascii.rawValue)
-            let trimmed:String = contests.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-            let words:Array<String> =  NSString(string: trimmed).components(separatedBy: .whitespacesAndNewlines)
-            return words
-        } catch {
-            print("Unable to read file");
-            return [String]()
-        }
-    }
-    
-    
     //Update Dictionary 
     func updateMainDic(wordArray : Array<String> ) {
         for words in wordArray {
@@ -117,7 +101,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    //For Button Actions
+    //For Item Button Actions
     @IBAction func insertAction(_ sender: Any) {
         
         if !trieLoad.isExist(inputField.text!) {
@@ -125,7 +109,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             if !appDelegate.Dic.isEmpty {
                 trieLoad.trieLoadAddword(inputField.text!+" "+"0")
                 inputField.text = ""
-               // arch.archive(appDelegate.Dic)
             }
         }
         else{
@@ -139,76 +122,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func textFieldDidChange(_ textField: UITextField) {
 
         self.itemBtn.setTitle("Items", for: UIControlState())
-        
         if !(findField.text!.isEmpty) {
             wordList = trieLoad.trieLoadFindWord(findField.text!)
             if  (!wordList.isEmpty) {
-                wordList = sortList(wordList)
-                justItems(wordList)
+                itemArr = sortList(items: wordList)
                 updateTable()
                 myTableView.isHidden = false
             }
                 
             else {
-                itemArray = [String]()
+                itemArr = [Item]()
                 updateTable()
             }
         }
         else {
-            itemArray = [String]()
+            itemArr = [Item]()
             updateTable()
         }
     }
     
-    
-    func sortList(_ wordList: [String]) -> [String] {
-        var temp:String = ""
-        var wordArray = [String]()
-        wordArray = wordList
+    func sortList(items : [Item]) -> [Item] {
         
-        for _ in 0 ..< wordArray.count {
-            for j in 0 ..< wordArray.count-1 {
-                var prev = wordArray[j].characters.split{$0 == " "}.map(String.init)
-                var next = wordArray[j+1].characters.split{$0 == " "}.map(String.init)
-                if (Int(next[1]) > Int(prev[1])) {
-                    temp = wordArray[j]
-                    wordArray[j] = wordArray[j+1]
-                    wordArray[j+1] = temp
-                }
-            }
-        }
-        var takeWeight = wordArray[0].characters.split{$0 == " "}.map(String.init)
-        self.highestWeight = Int(takeWeight[1])
-     //   print("highest weight :\(Int(takeWeight[1])!)")
-        return wordArray
-    }
-    
-    
-    func justItems(_ wordList: [String])  {
-        
-        itemArray = [String]()
-        for items in wordList {
-            var fullWordArr = items.characters.split{$0 == " "}.map(String.init)
-            itemArray.append(fullWordArr[0])
-        }
+        let captureStart = (Date().timeIntervalSince1970) * 1000
+        var sortedArray = [Item]()
+        sortedArray = items.sorted{$0.weight > $1.weight}
+        let captureEnd = (Date().timeIntervalSince1970) * 1000
+        let executionTime = captureEnd - captureStart
+        print("Total words :\(sortedArray.count) and execution time for sorting :\(executionTime)")
+        return sortedArray
     }
     
     
     @IBAction func itemAction(_ sender: Any) {
         
-        if itemArray.count > 0 {
-            
-            if (self.highestWeight < Int(countLabel.text!)) {
-                wordList = trieLoad.trieLoadFindWord(findField.text!)
-                wordList = sortList(wordList)
-                justItems(wordList)
-                updateTable()
-                self.highestWeight = Int(countLabel.text!)!
-            }
+        if itemArr.count > 0 {
+            wordList =  trieLoad.trieLoadFindWord(findField.text!)
+            itemArr = sortList(items: wordList)
+            updateTable()
+            self.highestWeight = Int(countLabel.text!)!
 
             if myTableView.isHidden == true {
                 myTableView.isHidden = false
             }
+                
             else
             {
                 myTableView.isHidden = true
@@ -221,16 +177,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return itemArray.count;
+        return itemArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let myCell:UITableViewCell = myTableView.dequeueReusableCell(withIdentifier: "prototype", for: indexPath)
-       // print(itemArray[indexPath.row])
-        myCell.textLabel?.text = itemArray[indexPath.row];
-        myCell.imageView?.image = UIImage(named: itemArray[indexPath.row]);
-        
+        myCell.textLabel?.text = itemArr[indexPath.row].value
         return myCell;
     }
     
@@ -240,18 +193,45 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.itemBtn.setTitle(cell.textLabel?.text, for: UIControlState())
         myTableView.isHidden = true
         countLabel.text = String(trieLoad.trieLoadWeighIncrease((cell.textLabel?.text)!))
-
-        
     }
     
     func updateTable() {
-        
         DispatchQueue.main.async(execute: { () -> Void in
             self.myTableView.reloadData()
-            if (self.itemArray.isEmpty) {
+            if (self.itemArr.isEmpty) {
+                print("array is empty")
                 self.myTableView.isHidden = true
             }
         })
+    }
+    
+    
+    //Word count
+    func totalWords() {
+        var counter:Int = 0
+        
+        for (_, values) in appDelegate.Dic {
+            for _ in values as! [String] {
+                counter += 1
+            }
+        }
+        
+        print("Total Words: \(counter)")
+    }
+    
+    //Read words from file
+    func readFile() -> Array<String> {
+        
+        do {
+            let pathNew = Bundle.main.path(forResource: "WordFile", ofType: "txt")
+            let contests:NSString = try NSString(contentsOfFile: pathNew!, encoding: String.Encoding.ascii.rawValue)
+            let trimmed:String = contests.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+            let words:Array<String> =  NSString(string: trimmed).components(separatedBy: .whitespacesAndNewlines)
+            return words
+        } catch {
+            print("Unable to read file");
+            return [String]()
+        }
     }
     
     

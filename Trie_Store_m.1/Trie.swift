@@ -20,6 +20,8 @@ class Trie {
         
         var keyword:String = ""
         var weight:String = ""
+//        keyword = item
+//        weight = value
         
         var fullWordArr = item.characters.split{$0 == " "}.map(String.init)
         keyword = fullWordArr[0]
@@ -47,19 +49,20 @@ class Trie {
         if (keyword.characters.count == current.level) {
             current.isFinal = true
             current.weight = Int(weight)!
-            print("end of word reached!")
+         //   print("end of word reached!")
             return
         }
     }
     
-    func findWord(_ keyword: String) -> [String] {
+    func findWord(_ keyword: String) -> [Item] {
         
         guard keyword.length > 0 else {
             return []
         }
         
         var current: TrieNode = root
-        var wordList: [String] = [String]()
+       // var wordList: [String] = [String]()
+        var newWordList = [Item]()
         
         while (keyword.length != current.level) {
             var childToUse: TrieNode!
@@ -78,13 +81,15 @@ class Trie {
         }
         
         if ((current.key == keyword) && (current.isFinal)) {
-            wordList.append(current.key+" "+String(current.weight))
+        //    wordList.append(current.key+" "+String(current.weight))
+            newWordList.append(Item(value:current.key, weight:current.weight))
         }
 
         
         //Iterating trie
         
         var currentChild : [TrieNode?] =  [TrieNode!]()
+      //  var wordTrieArr:[TrieNode] = []
         
         for  child in current.children {
             currentChild.append(child)
@@ -95,7 +100,9 @@ class Trie {
             
             for item in currentChild {
                 if (item?.isFinal)! {
-                    wordList.append((item?.key)!+" "+String(describing: item?.weight))
+                 //   wordList.append((item?.key)!+" "+String(describing: item?.weight))
+                    newWordList.append(Item(value:(item?.key)!, weight:(item?.weight)!))
+                  //  wordTrieArr.append(item!)
                 }
                 if (!(item?.children.isEmpty)!) {
                     for values in (item?.children)! {
@@ -107,7 +114,9 @@ class Trie {
             currentChild = tempCurrent
         }
         
-        return wordList
+        //return wordList
+        return newWordList
+      //  return wordTrieArr
     }
     
     
